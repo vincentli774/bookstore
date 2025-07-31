@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="outputTable">
+        <thead>
+            <tr>
+                <th>Title</th>
+                <th>Author</th>
+                <th>Year</th>
+                <th>Genre</th>
+            </tr>
+        </thead>
+        <tbody id="data-output">
+       <!-- Products from javascript file in here. -->
+        </tbody>
+        </table>
+        <br>
+    <form id="dataForm">
+        <label for="title">Title:</label><br>
+        <input type="text" id="Title" name="Title"><br>
+        <label for="author">Author:</label><br>
+        <input type="text" id="Author" name="Author"><br>
+        <label for="year">Year:</label><br>
+        <input type="text" id="Year" name="Year"><br>
+        <label for="genre">Genre:</label><br>
+        <input type="text" id="Genre" name="Genre"><br>
+        <button type="button" onclick="updateJson()">Update Book</button>
+        <button type="button" onclick="deleteJson()">Delete Book</button>
+    </form>
+    <div id="jsonOutput"></div>
+    <p id="updatedTitle"></p>
+    <p id="removedList"></p>
+    
+</body>
+</html>
+<script src="bookstore.js"></script>
+
+
+

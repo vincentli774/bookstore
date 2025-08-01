@@ -18,6 +18,7 @@ let out = "";
 placeholder.innerHTML = out;
 
 function updateJson(){
+  //take user input
   titleInput = document.getElementById("Title");
   title = titleInput.value;
   if (title == ""){
@@ -48,20 +49,25 @@ function updateJson(){
     alert("Genre must be filled out");
     return;
   }
+  //create a new jsonObject, problems occurred by simply updating the original JSON object
   jsonObj2 = jsonObj;
+  //loop through the JSON to find if the user entry corresponds to one of the JSON entries
   for (let i = 0; i < jsonObj.length; i++) {
+  //if the user entries correspond to the original jsonObj entry then take in user input
   if (jsonObj[i].Title == title && jsonObj[i].Author == author && jsonObj[i].Year == year && jsonObj[i].Genre == genre) {
     jsonObj2[i].Title = prompt("Please enter Title:")
+    //if the user input is empty alert the user to enter a valid entry
     if (jsonObj2[i].Title == ""){
     alert("Title must be filled out");
     return;
-  } 
+  }
     jsonObj2[i].Author = prompt("Please enter Author:")
     if (jsonObj2[i].Author == ""){
     alert("Author must be filled out");
     return;
   } 
     jsonObj2[i].Year = prompt("Please enter Year:")
+    //if the year is not a valid entry alert the user
     if (jsonObj2[i].Year == ""){
     alert("Enter a valid year");
     return;
@@ -80,7 +86,10 @@ function updateJson(){
     document.getElementById("updatedTitle").innerHTML = JSON.stringify(jsonObj2[i]);  
   }
   }
-for (let i = 0; i < jsonObj2.length; i++){
+  //looping through jsonObj2 to avoid code running on the second click
+  //when taking in faulty user input, this allows the table construction to 
+  //only execute when no errors are thrown
+
   if (jsonObj2[i].Title == ""){
     throw new error("Title must be filled out");
   }
@@ -109,9 +118,9 @@ for (let i = 0; i < jsonObj2.length; i++){
     placeholder2.innerHTML = out;
   }
 }     
-}
 
 function deleteJson(){
+  //take in user input
   titleInput = document.getElementById("Title");
   title = titleInput.value;
   if (title == ""){
@@ -124,21 +133,34 @@ function deleteJson(){
   }
   yearInput = document.getElementById("Year");
   year = yearInput.value;
+  //making sure a valid year is input by the user
   if (year == "" || Number(year) > 2025 || Number(year) < 0 || Number.isInteger(Number(year)) == false || Number(year) == NaN){
     throw new error("Enter valid year");
-  } else if (year != ""){
-    intYear3 = Number(year)
-    if (intYear3 == NaN || intYear3>2025 || intYear3 < 0 || Number.isInteger(intYear3) == false){
-      alert("Enter a valid year");
-      return;
-    }
-    }
+  }  
   genreInput = document.getElementById("Genre");
   genre = genreInput.value;
   if (genre == ""){
     throw new error("Title must be filled out");
   }
+  
+  //defining a new JSON object from which the new table will be created
+  //putting a for loop to stop the code from executing after the wrong input is inserted
   jsonObj3 = jsonObj
+  //
+  if (title == ""){
+    throw new error("Title must be filled out");
+  }
+  else if (author == "") {
+    throw new error("Author must be filled out");
+  }
+  else if (year == "" || Number(year) > 2025 || Number(year) < 0 || Number.isInteger(Number(year)) == false || Number(year) == NaN) {
+    throw new error("Enter a valid year");
+  }
+  else if (genre == ""){
+    throw new error("Genre must be filled out");
+  }
+  else {
+  //looping through jsonObj to check if the user input is in the jsonObj 
   for (let i = 0; i < jsonObj.length; i++) {
   if (jsonObj[i].Title == title && jsonObj[i].Author == author && jsonObj[i].Year == year && jsonObj[i].Genre == genre) {
     jsonObj3.splice(i, 1);
@@ -146,6 +168,7 @@ function deleteJson(){
     document.getElementById("removedList").innerHTML = JSON.stringify(jsonObj3);
   }
 }
+
 let placeholder3 = document.querySelector("#data-output");
   let outp = "";
   for(let i=0; i<jsonObj3.length; i++){
@@ -159,4 +182,5 @@ let placeholder3 = document.querySelector("#data-output");
       `;
   }
       placeholder3.innerHTML = outp;
+  }
 }

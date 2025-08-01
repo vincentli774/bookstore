@@ -22,7 +22,7 @@ function updateJson(){
   title = titleInput.value;
   if (title == ""){
     alert("Title must be filled out");
-    return;
+    throw new Error("Title must be filled out");
   } 
   authorInput = document.getElementById("Author");
   author = authorInput.value;
@@ -80,37 +80,52 @@ function updateJson(){
     document.getElementById("updatedTitle").innerHTML = JSON.stringify(jsonObj2[i]);  
   }
   }
-
-let placeholder2 = document.querySelector("#data-output");
-  let out = "";
-  for(let i=0; i<jsonObj2.length; i++){
-      out += `
+for (let i = 0; i < jsonObj2.length; i++){
+  if (jsonObj2[i].Title == ""){
+    throw new error("Title must be filled out");
+  }
+  else if (jsonObj2[i].Author == "") {
+    throw new error("Author must be filled out");
+  }
+  else if (jsonObj2[i].Year == "" || Number(jsonObj2[i].Year) > 2025 || Number(jsonObj2[i].Year) < 0 || Number.isInteger(Number(jsonObj2[i].Year)) == false || Number(jsonObj2[i].Year) == NaN) {
+    throw new error("Enter a valid year");
+  }
+  else if (jsonObj2[i].Genre == ""){
+    throw new error("Genre must be filled out");
+  }
+  else {
+    let placeholder2 = document.querySelector("#data-output");
+    let out = "";
+    for (let j=0; j < jsonObj2.length; j++){
+    out += `
          <tr>
-            <td>${jsonObj2[i].Title}</td>
-            <td>${jsonObj2[i].Author}</td>
-            <td>${jsonObj2[i].Year}</td>
-            <td>${jsonObj2[i].Genre}</td>
+            <td>${jsonObj2[j].Title}</td>
+            <td>${jsonObj2[j].Author}</td>
+            <td>${jsonObj2[j].Year}</td>
+            <td>${jsonObj2[j].Genre}</td>
          </tr>
       `;
+    }
+    placeholder2.innerHTML = out;
   }
-      placeholder2.innerHTML = out;
+}     
 }
 
 function deleteJson(){
   titleInput = document.getElementById("Title");
   title = titleInput.value;
   if (title == ""){
-    alert("Title must be filled out");
+    throw new error("Title must be filled out");
   }
   authorInput = document.getElementById("Author");
   author = authorInput.value;
   if (author == ""){
-    alert("Author must be filled out");
+    throw new error("Author must be filled out");
   }
   yearInput = document.getElementById("Year");
   year = yearInput.value;
-  if (year == ""){
-    alert("Enter a valid year");
+  if (year == "" || Number(year) > 2025 || Number(year) < 0 || Number.isInteger(Number(year)) == false || Number(year) == NaN){
+    throw new error("Enter valid year");
   } else if (year != ""){
     intYear3 = Number(year)
     if (intYear3 == NaN || intYear3>2025 || intYear3 < 0 || Number.isInteger(intYear3) == false){
@@ -121,7 +136,7 @@ function deleteJson(){
   genreInput = document.getElementById("Genre");
   genre = genreInput.value;
   if (genre == ""){
-    alert("Genre must be filled out");
+    throw new error("Title must be filled out");
   }
   jsonObj3 = jsonObj
   for (let i = 0; i < jsonObj.length; i++) {
@@ -132,9 +147,9 @@ function deleteJson(){
   }
 }
 let placeholder3 = document.querySelector("#data-output");
-  let out = "";
+  let outp = "";
   for(let i=0; i<jsonObj3.length; i++){
-      out += `
+      outp += `
          <tr>
             <td>${jsonObj3[i].Title}</td>
             <td>${jsonObj3[i].Author}</td>
@@ -143,5 +158,5 @@ let placeholder3 = document.querySelector("#data-output");
          </tr>
       `;
   }
-      placeholder3.innerHTML = out;
+      placeholder3.innerHTML = outp;
 }

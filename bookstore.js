@@ -22,32 +22,27 @@ function updateJson(){
   titleInput = document.getElementById("Title");
   title = titleInput.value;
   if (title == ""){
-    alert("Title must be filled out");
+    alert("Title must be filled out")
     throw new Error("Title must be filled out");
   } 
   authorInput = document.getElementById("Author");
   author = authorInput.value;
   if (author == ""){
-    alert("Author must be filled out");
-    return;
+    alert("Author must be filled in");
+    throw new error("Author must be filled out");
   }
   yearInput = document.getElementById("Year");
   year = yearInput.value;
-  if (year == ""){
-    alert("Enter a valid year");
-    return;
-  } else if (year != ""){
-    intYear = Number(year)
-    if (intYear == NaN || intYear>2025 || intYear < 0 || Number.isInteger(intYear) == false){
-      alert("Enter a valid year");
-      return;
-    }
-    }
+  if (year == "" || Number(year) > 2025 || Number(year) < 0 || Number.isInteger(Number(year)) == false || Number(year) == NaN){
+    alert("Enter valid year");
+    throw new error("Enter valid year");
+  }  
+  
   genreInput = document.getElementById("Genre");
   genre = genreInput.value;
   if (genre == ""){
     alert("Genre must be filled out");
-    return;
+    throw new error("Genre must be filled out");
   }
   //create a new jsonObject, problems occurred by simply updating the original JSON object
   jsonObj2 = jsonObj;
@@ -59,36 +54,32 @@ function updateJson(){
     //if the user input is empty alert the user to enter a valid entry
     if (jsonObj2[i].Title == ""){
     alert("Title must be filled out");
-    return;
-  }
+    throw new error("Title must be filled out");
+  } 
+
     jsonObj2[i].Author = prompt("Please enter Author:")
     if (jsonObj2[i].Author == ""){
     alert("Author must be filled out");
-    return;
-  } 
+    throw new error("Author must be filled out");
+    }
+   
     jsonObj2[i].Year = prompt("Please enter Year:")
     //if the year is not a valid entry alert the user
-    if (jsonObj2[i].Year == ""){
-    alert("Enter a valid year");
-    return;
-  } else if (jsonObj2[i].Year != ""){
-    intYear2 = Number(jsonObj2[i].Year)
-    if (intYear2 == NaN || intYear2>2025 || intYear2 < 0 || Number.isInteger(intYear2) == false){
-      alert("Enter a valid year");
-      return;
-    }
-    }
+    if (jsonObj2[i].Year == "" || Number(jsonObj2[i].Year) > 2025 || Number(jsonObj2[i].Year) < 0 || Number.isInteger(Number(jsonObj2[i].Year)) == false || Number(jsonObj2[i].Year) == NaN){
+      alert("Enter valid year");
+      throw new error("Enter valid year");
+  }  
+
     jsonObj2[i].Genre = prompt("Please enter Genre:")
     if (jsonObj2[i].Genre == ""){
-    alert("Genre must be filled out");
-    return;
+      alert("Genre must be filled out");
+      throw new error("Genre must be filled out");
   } 
     document.getElementById("updatedTitle").innerHTML = JSON.stringify(jsonObj2[i]);  
   }
-  }
-  //looping through jsonObj2 to avoid code running on the second click
+  //going through jsonObj2 to avoid code running on the second click
   //when taking in faulty user input, this allows the table construction to 
-  //only execute when no errors are thrown
+  //only execute when no errors are thrown, this is in the for loop so that the i value is used
 
   if (jsonObj2[i].Title == ""){
     throw new error("Title must be filled out");
@@ -116,53 +107,24 @@ function updateJson(){
       `;
     }
     placeholder2.innerHTML = out;
+    document.getElementById("jsonObj3").innerHTML = JSON.stringify(jsonObj);
   }
-}     
+} 
+}    
 
 function deleteJson(){
   //take in user input
-  titleInput = document.getElementById("Title");
+  jsonObj3 = jsonObj
+  titleInput = document.getElementById("Id");
   title = titleInput.value;
   if (title == ""){
+    alert("Title must be filled out")
     throw new error("Title must be filled out");
   }
-  authorInput = document.getElementById("Author");
-  author = authorInput.value;
-  if (author == ""){
-    throw new error("Author must be filled out");
-  }
-  yearInput = document.getElementById("Year");
-  year = yearInput.value;
-  //making sure a valid year is input by the user
-  if (year == "" || Number(year) > 2025 || Number(year) < 0 || Number.isInteger(Number(year)) == false || Number(year) == NaN){
-    throw new error("Enter valid year");
-  }  
-  genreInput = document.getElementById("Genre");
-  genre = genreInput.value;
-  if (genre == ""){
-    throw new error("Title must be filled out");
-  }
-  
-  //defining a new JSON object from which the new table will be created
-  //putting a for loop to stop the code from executing after the wrong input is inserted
-  jsonObj3 = jsonObj
-  //
-  if (title == ""){
-    throw new error("Title must be filled out");
-  }
-  else if (author == "") {
-    throw new error("Author must be filled out");
-  }
-  else if (year == "" || Number(year) > 2025 || Number(year) < 0 || Number.isInteger(Number(year)) == false || Number(year) == NaN) {
-    throw new error("Enter a valid year");
-  }
-  else if (genre == ""){
-    throw new error("Genre must be filled out");
-  }
-  else {
+ else {
   //looping through jsonObj to check if the user input is in the jsonObj 
   for (let i = 0; i < jsonObj.length; i++) {
-  if (jsonObj[i].Title == title && jsonObj[i].Author == author && jsonObj[i].Year == year && jsonObj[i].Genre == genre) {
+  if (jsonObj[i].Title == title) {
     jsonObj3.splice(i, 1);
     //jsonObj3[i].splice(i, 1)
     document.getElementById("removedList").innerHTML = JSON.stringify(jsonObj3);
@@ -171,16 +133,17 @@ function deleteJson(){
 
 let placeholder3 = document.querySelector("#data-output");
   let outp = "";
-  for(let i=0; i<jsonObj3.length; i++){
+  for(let j=0; j<jsonObj3.length; j++){
       outp += `
          <tr>
-            <td>${jsonObj3[i].Title}</td>
-            <td>${jsonObj3[i].Author}</td>
-            <td>${jsonObj3[i].Year}</td>
-            <td>${jsonObj3[i].Genre}</td>
+            <td>${jsonObj3[j].Title}</td>
+            <td>${jsonObj3[j].Author}</td>
+            <td>${jsonObj3[j].Year}</td>
+            <td>${jsonObj3[j].Genre}</td>
          </tr>
       `;
   }
       placeholder3.innerHTML = outp;
   }
+
 }
